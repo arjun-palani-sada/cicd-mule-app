@@ -10,27 +10,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Java
-      uses: actions/setup-java@v3
-      with:
-        java-version: '8'
-        distribution: 'temurin'
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'temurin'
 
-    - name: Set environment variables
-      run: |
-        echo "MAVEN_USERNAME=${{ secrets.MULE_USERNAME }}" >> $GITHUB_ENV
-        echo "MAVEN_PASSWORD=${{ secrets.MULE_PASSWORD }}" >> $GITHUB_ENV
-        echo "ENV=${{ secrets.MULE_ENV }}" >> $GITHUB_ENV
-        echo "ANYPOINT_USERNAME=${{ secrets.ANYPOINT_USERNAME }}" >> $GITHUB_ENV
-        echo "ANYPOINT_PASSWORD=${{ secrets.ANYPOINT_PASSWORD }}" >> $GITHUB_ENV
+      - name: Set environment variables
+        run: |
+          echo "MAVEN_USERNAME=${{ secrets.ANYPOINT_USERNAME }}" >> $GITHUB_ENV
+          echo "MAVEN_PASSWORD=${{ secrets.ANYPOINT_PASSWORD }}" >> $GITHUB_ENV
+          echo "ENV=${{ secrets.MULE_ENV }}" >> $GITHUB_ENV
 
-    - name: Copy settings.xml to Maven home
-      run: |
-        mkdir -p ~/.m2
-        cp .github/settings.xml ~/.m2/settings.xml
+      - name: Set up Maven settings.xml
+        run: |
+          mkdir -p ~/.m2
+          cp .github/settings.xml ~/.m2/settings.xml
 
-    - name: Build and Deploy with Maven
-      run: mvn clean deploy -Dmule.username=${{ env.MAVEN_USERNAME }} -Dmule.password=${{ env.MAVEN_PASSWORD }} -Denv=${{ env.ENV }}
+      - name: Build and Deploy with Maven
+        run: |
+          mvn clean deploy -Denv=${{ env.ENV }}
