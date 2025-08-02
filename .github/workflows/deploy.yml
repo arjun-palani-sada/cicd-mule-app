@@ -17,7 +17,7 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '8'
-        distribution: 'temurin'  # REQUIRED! You can also use 'zulu' or others
+        distribution: 'temurin'
 
     - name: Set environment variables
       run: |
@@ -25,5 +25,20 @@ jobs:
         echo "MAVEN_PASSWORD=${{ secrets.MULE_PASSWORD }}" >> $GITHUB_ENV
         echo "ENV=${{ secrets.MULE_ENV }}" >> $GITHUB_ENV
 
+    - name: Set up settings.xml for Maven
+      run: |
+        mkdir -p ~/.m2
+        cat > ~/.m2/settings.xml <<EOF
+<settings>
+  <servers>
+    <server>
+      <id>exchange</id>
+      <username>${{ secrets.ANYPOINT_USERNAME }}</username>
+      <password>${{ secrets.ANYPOINT_PASSWORD }}</password>
+    </server>
+  </servers>
+</settings>
+EOF
+
     - name: Build and Deploy with Maven
-      run: mvn clean deploy -Dmule.username=${{ env.MAVEN_USERNAME }} -Dmule.password=${{ env.MAVEN_PASSWORD }} -Denv=${{ env.ENV }}
+      run: mvn clean deploy --settings ~/.m2/settings.xml -Dmule.username=${{ env.MAVEN_USERNAME }} -Dmule.password=${{ env.MAVEN_PASSWORD }} -Denv=${{ env.ENV }}
