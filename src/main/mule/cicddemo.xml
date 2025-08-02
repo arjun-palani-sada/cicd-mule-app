@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="aa066003-de36-4885-a6ab-77e03a98a2ed" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="cicddemoFlow" doc:id="f7b12005-a6e6-4b5f-b71e-cec10ddc84e4" >
+		<http:listener doc:name="Listener" doc:id="b1dcebe8-7c9b-4b89-aaa2-c8a958809edb" config-ref="HTTP_Listener_config" path="/status"/>
+		<set-payload value='#["App is running yeayy"]' doc:name="Set Payload" doc:id="136be648-77fc-46f2-a759-e816bed87c68" />
+	</flow>
+</mule>
