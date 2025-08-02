@@ -29,16 +29,16 @@ jobs:
       run: |
         mkdir -p ~/.m2
         cat > ~/.m2/settings.xml <<EOF
-<settings>
-  <servers>
-    <server>
-      <id>exchange</id>
-      <username>${{ secrets.ANYPOINT_USERNAME }}</username>
-      <password>${{ secrets.ANYPOINT_PASSWORD }}</password>
-    </server>
-  </servers>
-</settings>
-EOF
+        <settings>
+          <servers>
+            <server>
+              <id>exchange</id>
+              <username>${{ secrets.ANYPOINT_USERNAME }}</username>
+              <password>${{ secrets.ANYPOINT_PASSWORD }}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
 
     - name: Build and Deploy with Maven
       run: mvn clean deploy -Dmule.username=${{ env.MAVEN_USERNAME }} -Dmule.password=${{ env.MAVEN_PASSWORD }} -Denv=${{ env.ENV }}
