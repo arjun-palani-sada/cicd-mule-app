@@ -16,23 +16,13 @@ jobs:
     - name: Set up Java
       uses: actions/setup-java@v3
       with:
-        distribution: 'temurin'
         java-version: '8'
 
-    - name: Cache Maven packages
-      uses: actions/cache@v3
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-maven
-
-    - name: Build with Maven
-      run: mvn clean package -DskipTests
-
-    - name: Deploy to CloudHub
+    - name: Set environment variables
       run: |
-        mvn deploy -DmuleDeploy \
-          -Danypoint.username=${{ secrets.ANYPOINT_USERNAME }} \
-          -Danypoint.password=${{ secrets.ANYPOINT_PASSWORD }} \
-          -Danypoint.env=sandbox \
-          -Dcloudhub.application.name=cicd-demo
+        echo "MAVEN_USERNAME=${{ secrets.MULE_USERNAME }}" >> $GITHUB_ENV
+        echo "MAVEN_PASSWORD=${{ secrets.MULE_PASSWORD }}" >> $GITHUB_ENV
+        echo "ENV=${{ secrets.MULE_ENV }}" >> $GITHUB_ENV
+
+    - name: Build and Deploy with Maven
+      run: mvn clean deploy -Dmule.username=${{ secrets.MULE_USERNAME }} -Dmule.password=${{ secrets.MULE_PASSWORD }} -Denv=${{ secrets.MULE_ENV }}
