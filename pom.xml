@@ -16,6 +16,15 @@
 		<app.runtime>4.9.0</app.runtime>
 		<mule.maven.plugin.version>4.3.0</mule.maven.plugin.version>
 	</properties>
+	
+	<distributionManagement>
+	    <repository>
+	        <id>exchange</id>
+	        <name>MuleSoft Exchange Repository</name>
+	        <url>https://maven.anypoint.mulesoft.com/api/v1/organizations/e7366df2-1b51-40f2-a374-29ce517ee548/maven</url>
+	    </repository>
+	</distributionManagement>
+	
 
 	<build>
 		<plugins>
