@@ -41,4 +41,4 @@ jobs:
 EOF
 
     - name: Build and Deploy with Maven
-      run: mvn clean deploy --settings ~/.m2/settings.xml -Dmule.username=${{ env.MAVEN_USERNAME }} -Dmule.password=${{ env.MAVEN_PASSWORD }} -Denv=${{ env.ENV }}
+      run: mvn clean deploy -Dmule.username=${{ env.MAVEN_USERNAME }} -Dmule.password=${{ env.MAVEN_PASSWORD }} -Denv=${{ env.ENV }}
