@@ -30,6 +30,26 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 			</plugin>
+				<plugin>
+				  <groupId>org.mule.tools.maven</groupId>
+				  <artifactId>mule-maven-plugin</artifactId>
+				  <version>4.3.0</version>
+				  <extensions>true</extensions>
+				  <configuration>
+				    <deployment>
+				      <type>cloudhub</type>
+				      <environment>${env}</environment> <!-- e.g., dev -->
+				      <username>${mule.username}</username>
+				      <password>${mule.password}</password>
+				      <applicationName>cicddemo</applicationName>
+				      <region>Cloudhub-US-East-2</region> <!-- or your desired region -->
+				      <workers>
+				        <type>MICRO</type>
+				        <amount>1</amount>
+				      </workers>
+				    </deployment>
+				  </configuration>
+				</plugin>
 		</plugins>
 	</build>
 
@@ -62,6 +82,9 @@
 			<layout>default</layout>
 		</repository>
 	</repositories>
+	
+
+	
 
 	<pluginRepositories>
 		<pluginRepository>
